@@ -77,27 +77,22 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate{
         audioEngine.reset()
         
         audioEngine.attachNode(audioPlayerNode)
-        if FX == "rate" || FX == "RATE" || FX == "Rate"
-        {
+        switch FX {
+        case "rate", "RATE", "Rate":
             // http://stackoverflow.com/questions/25704923/using-apples-new-audioengine-to-change-pitch-of-audioplayer-sound?lq=1
             var audioUnitTime = AVAudioUnitTimePitch()
             audioUnitTime.rate = variable
             audioEngine.attachNode(audioUnitTime)
             audioEngine.connect(audioPlayerNode, to: audioUnitTime, format: nil)
             audioEngine.connect(audioUnitTime,   to: audioEngine.outputNode, format: nil)
-        }
-        else if FX == "pitch" || FX == "PITCH" || FX == "Pitch"
-        {
+        case "pitch", "PITCH", "Pitch":
             // http://stackoverflow.com/questions/25704923/using-apples-new-audioengine-to-change-pitch-of-audioplayer-sound?lq=1
             var audioUnitPitch = AVAudioUnitTimePitch()
             audioUnitPitch.pitch = variable
             audioEngine.attachNode(audioUnitPitch)
             audioEngine.connect(audioPlayerNode, to: audioUnitPitch, format: nil)
             audioEngine.connect(audioUnitPitch,  to: audioEngine.outputNode, format: nil)
-        }
-        else if FX == "reverb" || FX == "REVERB" || FX == "Reverb"
-        {
-            
+        case "reverb", "REVERB", "Reverb":
             //lines 153-160 on https://github.com/shu223/iOS8-Sampler/blob/master/iOS8Sampler/Samples/AudioEngineViewController.m
             var audioUnitReverb = AVAudioUnitReverb()
             audioUnitReverb.loadFactoryPreset(AVAudioUnitReverbPreset.Cathedral)
